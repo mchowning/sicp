@@ -8,18 +8,17 @@
 
 (define (largest n1 n2 n3) (compare > n1 n2 n3))
 
+(define (inorder n1 n2 n3) (and (<= n1 n2)
+                                (<= n2 n3)))
 
-(define (between n1 n2 n3) (or (and (>= n1 n2) 
-                                    (<= n1 n3))
-                               (and (<= n1 n2) 
-                                    (>= n1 n3))))
+(define (between n1 n2 n3) (or (inorder n2 n1 n3)
+                               (inorder n3 n1 n2)))
 
 (define (middlest n1 n2 n3) (cond ((between n1 n2 n3)
                                    n1)
                                   ((between n2 n1 n3)
                                    n2)
                                   (else n3)))
-
 
 (define (square x) (* x x))
 
