@@ -1,0 +1,30 @@
+(define (largest n1 n2 n3)
+	(cond ((and (> n1 n2)
+		    (> n1 n3)) 
+	        n1)
+	      ((and (> n2 n1)
+	            (> n2 n3)) 
+                n2)
+              (else n3)))
+
+(define (smallest n1 n2 n3) (cond ((and (< n1 n2)
+				        (< n1 n3))
+                                   n1)
+                                  ((and (< n2 n1)
+                                        (< n2 n3))
+                                   n2)
+                                  (else n3)))
+
+(define (middlest n1 n2 n3) (cond ((and (not (= (largest n1 n2 n3) n1))
+                                        (not (= (smallest n1 n2 n3) n1)))
+                                   n1)
+                                  ((and (not (= (largest n1 n2 n3) n2))
+                                        (not (= (smallest n1 n2 n3) n2)))
+                                   n2)
+                                  (else n3)))
+                                   
+
+(define (square x) (* x x))
+
+(define (sumOfSquareOf2Largest n1 n2 n3) (+ (square (largest n1 n2 n3))
+                                    (square (middlest n1 n2 n3))))
