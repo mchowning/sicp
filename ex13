@@ -1,14 +1,125 @@
-(define (largest n1 n2 n3) (cond ((and (>= n1 n2)
-                                       (>=  n1 n3))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Initial answer
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (largest n1 n2 n3) (cond ((and (> n1 n2)
+                                       (> n1 n3)) 
                                   n1)
-                                  ((and (>= n2 n1)
-                                        (>= n2 n3))
+                                 ((and (> n2 n1)
+                                       (> n2 n3)) 
                                   n2)
                                  (else n3)))
 
+(define (smallest n1 n2 n3) (cond ((and (< n1 n2)
+                                        (< n1 n3))
+                                   n1)
+                                  ((and (< n2 n1)
+                                        (< n2 n3))
+                                   n2)
+                                  (else n3)))
+
+(define (middlest n1 n2 n3) (cond ((and (not (= (largest n1 n2 n3) 
+                                                n1))
+                                        (not (= (smallest n1 n2 n3) 
+                                                n1)))
+                                    n1)
+                                   ((and (not (= (largest n1 n2 n3) 
+                                                 n2))
+                                         (not (= (smallest n1 n2 n3) 
+                                                 n2)))
+                                    n2)
+                                   (else n3)))
+
+(define (square x) (* x x))
+
+(define (sumOfSquareOf2Largest n1 n2 n3) (+ (square (largest n1 n2 n3))
+                                            (square (middlest n1 n2 n3))))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Extracting compare function
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (compare fn n1 n2 n3) (cond ((and (fn n1 n2)
+                                          (fn n1 n3))
+                                     n1)
+                                    ((and (fn n2 n1)
+                                          (fn n2 n3))
+                                     n2)
+                                    (else n3)))
+
+(define (largest n1 n2 n3) (compare > n1 n2 n3))
+
+(define (smallest n1 n2 n3) (compare < n1 n2 n3))
+
+(define (middlest n1 n2 n3) (cond ((and (not (= (largest n1 n2 n3) 
+                                                n1))
+                                        (not (= (smallest n1 n2 n3) 
+                                                n1)))
+                                   n1)
+                                  ((and (not (= (largest n1 n2 n3) 
+                                                n2))
+                                        (not (= (smallest n1 n2 n3) 
+                                                n2)))
+                                   n2)
+                                  (else n3)))
+
+(define (square x) (* x x))
+
+(define (sumOfSquareOf2Largest n1 n2 n3) (+ (square (largest n1 n2 n3))
+                                            (square (middlest n1 n2 n3))))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Extracted between function
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (compare fn n1 n2 n3) (cond ((and (fn n1 n2)
+                                          (fn n1 n3))
+                                     n1)
+                                    ((and (fn n2 n1)
+                                          (fn n2 n3))
+                                     n2)
+                                    (else n3)))
+
+(define (largest n1 n2 n3) (compare > n1 n2 n3))
+
+(define (between n1 n2 n3) (or (and (>= n1 n2) 
+                                    (<= n1 n3))
+                               (and (<= n1 n2) 
+                                    (>= n1 n3))))
+
+(define (middlest n1 n2 n3) (cond ((between n1 n2 n3)
+                                   n1)
+                                  ((between n2 n1 n3)
+                                   n2)
+                                  (else n3)))
+
+(define (square x) (* x x))
+
+(define (sumOfSquareOf2Largest n1 n2 n3) (+ (square (largest n1 n2 n3))
+                                            (square (middlest n1 n2 n3))))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Extracted inorder function for use in between function
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (compare fn n1 n2 n3) (cond ((and (fn n1 n2)
+                                          (fn n1 n3))
+                                     n1)
+                                    ((and (fn n2 n1)
+                                          (fn n2 n3))
+                                     n2)
+                                    (else n3)))
+
+(define (largest n1 n2 n3) (compare > n1 n2 n3))
+
 (define (inorder n1 n2 n3) (and (<= n1 n2)
                                 (<= n2 n3)))
-
 
 (define (between n1 n2 n3) (or (inorder n2 n1 n3)
                                (inorder n3 n1 n2)))
@@ -22,4 +133,80 @@
 (define (square x) (* x x))
 
 (define (sumOfSquareOf2Largest n1 n2 n3) (+ (square (largest n1 n2 n3))
-                                    (square (middlest n1 n2 n3))))
+                                            (square (middlest n1 n2 n3))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Got rid of not-so-necessary compare function
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (largest n1 n2 n3) (cond ((and (>= n1 n2)
+                                       (>=  n1 n3))
+                                  n1)
+                                 ((and (>= n2 n1)
+                                       (>= n2 n3))
+                                  n2)
+                                 (else n3)))
+
+(define (inorder n1 n2 n3) (and (<= n1 n2)
+                                (<= n2 n3)))
+
+(define (between n1 n2 n3) (or (inorder n2 n1 n3)
+                               (inorder n3 n1 n2)))
+
+(define (middlest n1 n2 n3) (cond ((between n1 n2 n3)
+                                   n1)
+                                  ((between n2 n1 n3)
+                                   n2)
+                                  (else n3)))
+
+(define (square x) (* x x))
+
+(define (sumOfSquareOf2Largest n1 n2 n3) (+ (square (largest n1 n2 n3))
+                                            (square (middlest n1 n2 n3))))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Adding the sum of all squares and then subtracting the square of the smallest
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (smallest n1 n2 n3) (cond ((and (<= n1 n2)
+                                        (<= n1 n3))
+                                   n1)
+                                  ((and (<= n2 n3)
+                                        (<= n2 n1))
+                                   n2)
+                                  (else n3)))
+
+(define (square x) (* x x))
+
+(define (sumOfSquares n1 n2 n3) (+ (square n1)
+                                   (square n2)
+                                   (square n3)))
+
+(define (sumOfSquareOf2Largest n1 n2 n3) (- (sumOfSquares n1 n2 n3)
+                                            (square (smallest n1 n2 n3))))
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Just comparing two at a time 
+;; Seems like this could easily expand to a recursive function that took any
+;; number of arguments
+;; (probably my favorite)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (largest n1 n2) (if (>= n1 n2)
+                          n1
+                          n2))
+
+(define (square x) (* x x))
+
+(define (sumOfSquareOf2Largest n1 n2 n3) (if (= (largest n1 n2) 
+                                                n1)
+                                             (+ (square n1) 
+                                                (square (largest n2 n3)))
+                                             (+ (square n2) 
+                                                (square (largest n1 n3)))))
