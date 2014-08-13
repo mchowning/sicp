@@ -1,4 +1,6 @@
 # SICP exercise solutions
 
-Thanks to the resources that helped me along
+Helpful resources
 * [Scheme Wiki] (http://community.schemewiki.org/?sicp-solutions)
+* [Eli Bendersky's website] (http://eli.thegreenplace.net/category/programming/lisp/sicp/)
+* [Weizun Zhang's Blog] (http://wqzhang.wordpress.com/sicp-solutions/)
