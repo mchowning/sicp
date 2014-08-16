@@ -1,0 +1,72 @@
+
+;; Recursive definition of function
+
+(define (f-rec n)
+  (if (< n 3)
+    n
+    (+ (f-rec (- n 1))
+       (* 2
+          (f-rec (- n 2)))
+       (* 3
+          (f-rec (- n 3))))))
+
+;; Iterative definition of same function
+;; goal = the value provided as the argument to the initial function
+;; counter = function's counter progress toward goal
+;; a = value for counter
+;; b = value for counter-1
+;; c = value for counter-2
+
+(define (f-iter n)
+  (define (f-sub-iter goal counter a b c)
+
+    (define new-a (+ a
+                     (* b 2)
+                     (* c 3)))
+    (define new-b a)
+    (define new-c b) ;; original c drops off
+
+    (if (<= goal counter)
+      (if (< goal 3)
+        goal
+        new-a)
+      (f-sub-iter goal
+                   (+ counter 1)
+                   new-a
+                   new-b
+                   new-c)))
+  (f-sub-iter n 3 2 1 0))
+
+;; More succinct version of iterative function based on 
+;; Eli Bendersky's solution online
+  
+(define (f-iter n)
+
+  (define (f-iter-sub counter a b c)
+    (if (= counter 2) 
+      a
+      (f-iter-sub (- counter 1)
+                  (+ a (* b 2) (* 3 c))
+                  a
+                  b)))
+  (if (< n 3)
+    n
+    (f-iter-sub n 2 1 0)))
+
+
+;; More succinct form of iterative version I came up with after looking
+;; at other people's versions online
+
+(define (f-iter n)
+
+  (define (f-iter-sub counter f-1 f-2 f-3)
+
+    (define current (+ f-1 (* 2 f-2) (* 3 f-3)))
+
+    (if (counter > n)
+      current
+      (f-iter-sub (+ counter 1) current f-1 f-2)))
+
+  (if (< n 3)
+    n
+    (f-iter-sub n 2 1 0)))
