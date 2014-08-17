@@ -1,0 +1,9 @@
+(define (fizzbuzz num)
+  (cond ((= 0 (remainder num 15)) 
+         'fizzbuzz)
+        ((= 0 (remainder num 3))
+         'fizz)
+        ((= 0 (remainder num 5))
+         'buzz)))
+         
+
