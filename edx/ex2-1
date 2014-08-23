@@ -1,0 +1,15 @@
+(define (substitute input replacee replacer)
+
+  (define (replace-if-match output iword replacee replacer)
+    (if (equal? iword replacee)
+      (sentence output replacer)
+      (sentence output iword)))
+
+  (define (sub-rec output input replacee replacer)
+    (if (empty? input)
+      output
+      (sub-rec (replace-if-match output (first input) replacee replacer)
+               (bf input)
+               replacee
+               replacer)))
+  (sub-rec '() input replacee replacer))
