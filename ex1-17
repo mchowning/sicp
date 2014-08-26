@@ -1,9 +1,3 @@
-(define (* a b)
-  (if (= b 0)
-    0
-    (+ a (* a
-            (- b 1)))))
-
 (define (double a)
   (+ a a))
 
@@ -23,18 +17,3 @@
         (else (+ a 
                  (mult-fast a
                             (- b 1))))))
-
-
-; For fun, a linear iterative implementation
-
-(define (mult-fast-lin a b)
-  (define (mult-fast-iter n1 n2 c)
-    (cond  ((= n2 0) 
-            c)
-           ((even? n2) (mult-fast-iter (double n1)
-                                       (/ n2 2)
-                                       c))
-           (else (mult-fast-iter n1
-                                 (- n2 1)
-                                 (+ c n1)))))
-  (mult-fast-iter a b 0))

@@ -1,0 +1,22 @@
+(define (mult-fast a b)
+
+  (define (double a)
+    (+ a a))
+
+  (define (halve a)
+    (/ a 2)) ; kind of cheating by using /, but oh well
+
+  (define (even? a)
+    (= (remainder a 2)
+       0))
+
+  (define (mult-fast-iter n1 n2 c)
+    (cond  ((= n2 0) c)
+           ((even? n2) (mult-fast-iter (double n1)
+                                       (halve n2)
+                                       c))
+           (else (mult-fast-iter n1
+                                 (- n2 1)
+                                 (+ c n1)))))
+  (mult-fast-iter a b 0))
+
